@@ -1,0 +1,28 @@
+#!ruby
+
+def cxx(name, *opts)
+    sh "clang++", "-Wall", "-Wextra", "-std=c++0x",
+        "-o", name, *opts;
+end
+
+def ld(name, *opts)
+    sh "clang++", "-o", name, *opts;
+end
+
+
+task :default => ['hello'] do
+    puts ":default finished";
+end
+
+task :clean do 
+    rm_rf ["hello.o", "hello"];
+end
+
+file 'hello' => ['hello.o'] do |t|
+    ld t.name, *t.prerequisites;
+end
+
+rule '.o' => ['.cpp', '.h'] do |t|
+    cxx t.name, "-c", *t.source;
+end
+
