@@ -16,4 +16,10 @@ hello: hello.o
 hello.o: hello.cpp hello.h
 	$(CXX) hello.o hello.cpp
 
+echo:
+	export FOO=bar
+	echo [$$FOO]
+	FOO=bar echo [$$FOO]
+	export FOO=bar; echo [$$FOO]
+
 
